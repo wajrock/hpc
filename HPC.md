@@ -128,7 +128,7 @@ __global__ void sepiaKernel(unsigned char* image, int width, int height) {
     int x = blockIdx.x * blockDim.x + threadIdx.x;
     int y = blockIdx.y * blockDim.y + threadIdx.y;
 
-    // 2. Vérification des limites (Guard clause)
+    // 2. Vérification des limites 
     // Nécessaire car la taille de grille est souvent un multiple de la taille de bloc,
     // ce qui peut dépasser légèrement la taille de l'image.
     if (x < width && y < height) {
@@ -141,7 +141,7 @@ __global__ void sepiaKernel(unsigned char* image, int width, int height) {
         float g = image[tid+1];
         float b = image[tid+2];
 
-        // Application de la formule Sépia (Calcul Intensif)
+        // Application de la formule Sépia 
         // Note : fminf assure qu'on ne dépasse pas la valeur 255
         image[tid]   = (unsigned char)fminf(255.0f, (r * 0.393f) + (g * 0.769f) + (b * 0.189f));
         image[tid+1] = (unsigned char)fminf(255.0f, (r * 0.349f) + (g * 0.686f) + (b * 0.168f));
@@ -182,5 +182,6 @@ Ce gain phénoménal ne vient pas du fait que le GPU "calcule plus vite" (ses c�
 
 ## 5. Conclusion : Vers la Pensée Parallèle
 Le GPU se définit comme un processeur massivement parallèle composé de milliers de cœurs simplifiés, piloté par l'architecture logicielle CUDA pour effectuer du calcul intensif. Cependant, cette technologie ne se résume pas à une simple accélération matérielle : elle implique un changement profond de méthode.
+
 
 Alors que le CPU privilégie la rapidité d'exécution d'une tâche unique (latence), le GPU favorise le traitement simultané de grands volumes de données (débit). Maîtriser CUDA exige donc d'abandonner la logique séquentielle des boucles pour adopter une approche "spatiale", en mappant le problème sur une grille de threads. La performance finale dépendra alors de la capacité du développeur à saturer ces unités de calcul, tout en minimisant les transferts mémoire via le bus PCIe qui reste le principal goulot d'étranglement.
