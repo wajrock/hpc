@@ -51,6 +51,9 @@ L'exécution est divisée en trois niveaux logiques :
 2.  **Le Bloc (Block) :** La grille est découpée en tuiles appelées blocs. C'est une unité cruciale car les threads d'un même bloc peuvent coopérer via une mémoire partagée très rapide.
 3.  **Le Thread :** C'est l'unité fondamentale de calcul.
 
+ 
+![](cuda_hierarchie.png "Hierarchie CUDA")
+
 Prenons l'analogie d'une **université** (la Grille) un jour d'examen. L'université est divisée en plusieurs **amphithéâtres** (les Blocs). Dans chaque amphithéâtre, nous avons des centaines d'**étudiants** (les Threads).
 
   * L'examinateur (le Host) distribue le même sujet d'examen à toute l'université.
