@@ -15,6 +15,12 @@ La différence fondamentale réside dans l'allocation des transistors sur la puc
   * **Le CPU (Latence) :** Il consacre une énorme partie de sa surface à la mémoire cache et à des unités de contrôle complexes (prédiction de branchement) pour exécuter *une* série d'instructions le plus vite possible.
   * **Le GPU (Débit) :** Il sacrifie cette complexité unitaire au profit de la quantité. Il est composé de milliers de cœurs plus simples, optimisés pour le **débit** (Throughput) : traiter un volume massif d'informations en parallèle.
 
+<div align="center" style="margin: 2rem">
+  <img src="cpu_gpu.png" alt="Hierarchie CUDA" width="100%">
+  <br>
+  <em>Figure 1 : Comparaison structure CPU & GPU</em>
+</div>
+
 Pour visualiser cette différence, imaginez que le CPU est une **Ferrari**. Elle est extrêmement rapide pour transporter une personne d'un point A à un point B. Le GPU, en revanche, est un **bus**. Il roule moins vite que la Ferrari, mais il peut transporter 50 personnes d'un coup. Si votre objectif est de déplacer 1 000 personnes (ou 10 millions de pixels), la Ferrari devra faire 1 000 allers-retours, tandis qu'une flotte de bus terminera le travail bien plus tôt.
 
 ### 1.2 Le Modèle de Programmation Hétérogène
@@ -51,8 +57,11 @@ L'exécution est divisée en trois niveaux logiques :
 2.  **Le Bloc (Block) :** La grille est découpée en tuiles appelées blocs. C'est une unité cruciale car les threads d'un même bloc peuvent coopérer via une mémoire partagée très rapide.
 3.  **Le Thread :** C'est l'unité fondamentale de calcul.
 
- 
-![](cuda_hierarchie.png "Hierarchie CUDA")
+<div align="center" style="margin: 2rem">
+  <img src="cuda_hierarchie.png" alt="Hierarchie CUDA" width="70%">
+  <br>
+  <em>Figure 2 : Modèle d'exécution CUDA.</em>
+</div>
 
 Prenons l'analogie d'une **université** (la Grille) un jour d'examen. L'université est divisée en plusieurs **amphithéâtres** (les Blocs). Dans chaque amphithéâtre, nous avons des centaines d'**étudiants** (les Threads).
 
@@ -93,6 +102,12 @@ Il vaut mieux lancer un calcul complexe sur le GPU (même s'il est un peu lent) 
 ## 4\. Étude de Cas : Filtre Sépia et Linéarisation Mémoire
 
 Appliquons ces concepts à un cas concret : transformer une image en Sépia. C'est un problème "embarrassingly parallel" car chaque pixel peut être calculé indépendamment des autres.
+
+<div align="center" style="margin: 2rem">
+  <img src="sepia.webp" alt="Comparaison Original vs Filtre Sépia" width="100%">
+  <br>
+  <em>Figure 3 : Illustration d'un filtre Sépia</em>
+</div>
 
 ### 4.1 Le Défi de la Mémoire 1D
 
